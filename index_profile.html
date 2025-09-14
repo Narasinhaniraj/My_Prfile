@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Portfolio</title>
+  <meta name="description" content="Portfolio of Narasimha — Graduate student in Computer Science. Projects, resume and contact." />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+  <style>
+    :root{
+      --bg:#0f1724; /* dark navy */
+      --card:#0b1220;
+      --muted:#9aa4b2;
+      --accent:#6ee7b7; /* mint */
+      --glass: rgba(255,255,255,0.04);
+      --maxw:1100px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071021 0%, var(--bg) 100%);color:#e6eef6}
+    a{color:var(--accent);text-decoration:none}
+
+    .container{max-width:var(--maxw);margin:28px auto;padding:24px}
+
+    /* header */
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#60a5fa);display:flex;align-items:center;justify-content:center;font-weight:700;color:#06202a}
+    nav{display:flex;gap:12px;align-items:center}
+    nav a{padding:8px 12px;border-radius:8px;font-size:14px;color:var(--muted)}
+    nav a.primary{background:var(--glass);color:var(--accent)}
+
+    /* hero */
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:28px;margin:32px 0;align-items:center}
+    .intro h1{font-size:34px;margin:0 0 12px}
+    .intro p.lead{color:var(--muted);margin:0 0 16px;line-height:1.5}
+    .ctas{display:flex;gap:12px}
+    .btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;cursor:pointer}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),#60a5fa);color:#042926;border:none}
+
+    .profile-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:14px;backdrop-filter:blur(6px)}
+    .profile-photo{width:100%;height:240px;border-radius:10px;object-fit:cover;background:linear-gradient(180deg,#111827,#0b1220);display:flex;align-items:center;justify-content:center;color:var(--muted)}
+    .meta{display:flex;justify-content:space-between;margin-top:12px;color:var(--muted);font-size:14px}
+
+    /* sections */
+    section{margin:32px 0}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{background:var(--card);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .card h3{margin:0 0 8px}
+    .skills{display:flex;flex-wrap:wrap;gap:8px}
+    .chip{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.03);font-size:13px;color:var(--muted)}
+
+    /* projects */
+    .projects{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .proj{display:flex;flex-direction:column;gap:10px}
+    .proj .thumb{height:140px;border-radius:10px;background:linear-gradient(135deg,#063447, #0b1220);display:flex;align-items:center;justify-content:center;color:var(--muted)}
+    .proj .meta{display:flex;justify-content:space-between;align-items:center}
+
+    /* footer/contact */
+    .contact-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    input,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    textarea{min-height:120px;resize:vertical}
+
+    /* responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr;}
+      .projects{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:1fr}
+      .contact-form{grid-template-columns:1fr}
+    }
+
+    /* small polish */
+    .muted{color:var(--muted)}
+    .tiny{font-size:13px}
+    .center{display:flex;align-items:center;justify-content:center}
+
+    /* project modal */
+    .modal{position:fixed;inset:0;background:rgba(2,6,23,0.7);display:none;align-items:center;justify-content:center}
+    .modal.show{display:flex}
+    .modal-card{background:#071625;padding:20px;border-radius:12px;max-width:900px;width:92%}
+    .close{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:6px 8px;border-radius:8px;cursor:pointer}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">NR</div>
+        <div>
+          <div style="font-weight:700">NarasimhaRao_Pinninti</div>
+          <div class="tiny muted">B.Tech — Computer Science | Aspiring Software Developer</div>
+        </div>
+      </div>
+
+      <nav>
+        <a href="#about" class="primary">About</a>
+        <a href="#projects" class="primary">Projects</a>
+        <a href="#contact" class="primary">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="intro">
+          <h1>Hi I'm <span style="color:var(--accent)">NarasimhaRao_Pinninti</span>.</h1>
+          <p class="lead">Aspiring software developer with strong fundamentals in computer science and hands-on project experience. Looking for an opportunity to work on real-world applications, collaborate with a dynamic team, and enhance my technical and professional skills.</p>
+
+          <div class="ctas">
+            <a class="btn primary" href="#projects">View Projects</a>
+            <a class="btn primary" href="mailto:your.email@example.com?subject=Contact%20from%20Portfolio">pinnintinarasimha73@gmail.com</a>
+            <a class="btn primary" href="file:///C:/Users/hp/Desktop/Company_resumes/pinninti_narasimha_rao.pdf" download>Download Resume</a>
+          </div>
+
+          <div style="margin-top:18px" class="tiny muted">Language: <span class="chip">Python</span> <span class="chip">Java</span>  <span class="chip">HTML/CSS/JS</span></div>
+          <div style="margin-top:18px" class="tiny muted">DataBase:<span class="chip">SQL</span></div>
+          <div style="margin-top:18px" class="tiny muted">Web Dev TOOLs:<span class="chip">AWS</span><span class="chip">Figma</span><span class="chip">GitHub</span></div>
+          <div style="margin-top:18px" class="tiny muted">Operating Systems:<span class="chip">Window's</span><span class="chip">Linux</span></div>
+          
+
+        </div>
+
+        <aside class="profile-card">
+          <div class="Narasimha Profile Photo"><img src="./assets/picoo/P1045057.JPG" alt="Narasimha Profile Photo" class="profile-photo" /></div>
+          <div class="meta">
+            <div>
+              <div style="font-weight:700">Vijayawada, India</div>
+              <div class="tiny muted">Open to opportunities | Available for internships</div>
+            </div>
+            <div class="tiny muted">Graduate B.Tech </div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="about">
+        <div class="grid-3">
+          <div class="card">
+            <h3>About Me</h3>
+            <p class="muted">I am a B.Tech Graduate Computer Science student with hands-on experience in full-stack projects, UI/UX design. I enjoy learning new technologies and building projects that solve real problems.</p>
+            <p class="tiny">Education: NRI Institute of Technology</p>
+          </div>
+
+          <div class="card">
+            <h3>Experience</h3>
+            <div class="tiny muted">UI/UX Intern — CodSoft</div>
+            <div class="tiny muted">Web Dev Intern — Prodigy</div>
+            <div class="tiny muted">Python full-stack Intern — Codegnan</div>
+            <div class="tiny muted">Java full-stack Intern — HMI Engineering Services</div>
+            <div style="height:8px"></div>
+            <div class="tiny muted">Tools: Git, VS Code, Figma, Postman , Putty , AWS</div>
+          </div>
+
+          <div class="card">
+            <h3>Certifications</h3>
+            <ul class="muted tiny">
+              <li>Great Learning — Excel Beginners</li>
+              <li>Python Full Stack — Codegnan IT</li>
+              <li>OCI Generative AI Certified Professional</li>
+              <li>Agile Beginner — Great Learning</li>
+              <li>ExcelR — Devops</li>
+              <li>Complete Microsoft Office Word Excel PowerPoint Google Sheet - Udemy</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects">
+        <h2>My Projects</h2>
+        <div class="projects">
+          <div class="card proj">
+            <div class="thumb">Student Library Management System</div>
+            <div>
+              <div style="font-weight:700">Student Library Management System</div>
+              <div class="muted tiny">• Python • Flask  • SQL • Role: Backend & DB</div>
+            </div>
+            <div class="meta">
+              <div class="tiny muted">A system to manage books, students and issue/return operations.</div>
+              <div>
+                <button class="btn" onclick="openModal('proj1')">Case Study</button>
+                <a class="btn" href="#" onclick="window.open('https://github.com/yourusername/library','_blank')">GitHub</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card proj">
+            <div class="thumb">UI/UX Restaurant Menu</div>
+            <div>
+              <div style="font-weight:700">UI/UX Restaurant Menu</div>
+              <div class="muted tiny">• Figma • HTML/CSS • Role: Designer & Frontend</div>
+            </div>
+            <div class="meta">
+              <div class="tiny muted">Improved navigation and accessibility for student portal.</div>
+              <div>
+                <button class="btn" onclick="openModal('proj2')">Case Study</button>
+                <a class="btn" href="#" onclick="window.open('https://www.figma.com/design/GHQJYxjlEDH3kIdxPSrrtn/Restaurant-menu?node-id=0-1&p=f&t=ZdinMfkp96wwYGQj-0','_blank')">Prototype</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card proj">
+            <div class="thumb">Java Web App</div>
+            <div>
+              <div style="font-weight:700">Java Dynamic Web Page</div>
+              <div class="muted tiny">Java, JSP, SQL , HTML , CSS ,JAVASCRIPT </div>
+            </div>
+            <div class="meta">
+              <div class="tiny muted">Java Dynamic Web Application — Built dynamic JSP pages with Java, SQL, HTML, CSS, and JavaScript. Implemented CRUD operations, database connections, and session management for smooth user interaction.</div>
+              <div>
+                <button class="btn" onclick="openModal('proj3')">Case Study</button>
+                <a class="btn" href="#" onclick="window.open('https://github.com/yourusername/java-webapp','_blank')">GitHub</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card proj">
+            <div class="thumb">AI Agent using n8n Workflow</div>
+            <div>
+              <div style="font-weight:700">first AI Agent in n8n</div>
+              <div class="muted tiny">• n8n Workflow Automation • OpenAI API • Webhook Node • and Memory Node</div>
+            </div>
+            <div class="meta">
+              <div class="tiny muted">AI Agent using n8n Workflow – Built an interactive AI Agent capable of real-time conversations with memory retention using n8n and OpenAI API. Automated responses in a no-code workflow, marking my first milestone in AI and automation.</div>
+              <div>
+                <button class="btn" onclick="openModal('proj2')">Case Study</button>
+                <a class="btn" href="#" onclick="window.open('https://github.com/Narasinhaniraj/My_First_AI_Agent/tree/main')">Prototype</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card proj">
+            <div class="thumb">Harnessing-Deep-Learning-for-Early-Disease-Diagnosis</div>
+            <div>
+              <div style="font-weight:700">My_Final_year_Project</div>
+              <div class="muted tiny">• We used Python with TensorFlow/Keras for deep learning, NLP libraries (NLTK, SpaCy, DistilBERT) for symptom analysis, Flask for backend, HTML/CSS/JS for frontend, and MySQL for database.</div>
+            </div>
+            <div class="meta">
+              <div class="tiny muted">My project is an AI-powered healthcare chatbot that uses NLP and deep learning to predict diseases from symptoms. It not only gives accurate diagnosis (94.2% accuracy) but also suggests medications, natural remedies, and sends health reports via email. I mainly worked on NLP-based prediction, SQL database, and Flask backend integration.</div>
+              <div>
+                <button class="btn" onclick="openModal('proj4')">Case Study</button>
+                <a class="btn" href="#" onclick="window.open('https://github.com/Narasinhaniraj/Harnessing-Deep-Learning-for-Early-Disease-Diagnosis','_blank')">GitHub</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+  <div class="card">
+    <h3>Contact</h3>
+    <p class="muted tiny">Feel free to reach me through the following:</p>
+
+    <div style="margin-top:10px; line-height:1.8;">
+      <div><strong>Email:</strong> <a href="mailto:pinnintinarasimha73@gmail.com">pinnintinarasimha73@gmail.com</a></div>
+      <div><strong>Mobile:</strong> <a href="tel:+917799323190">+91 7799323190</a></div>
+      <div><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/narasimha-rao-pinninti/" target="_blank">linkedin.com/in/narasimha-rao-pinninti</a></div>
+    </div>
+
+    <div style="margin-top:14px" class="muted tiny">
+      Social:
+      <a href="https://github.com/Narasinhaniraj?tab=repositories" target="_blank">GitHub</a> • 
+      <a href="https://www.hackerrank.com/profile/22KN5A0518" target="_blank">HackerRank</a> • 
+      <a href="https://www.codechef.com/users/narasimharao23" target="_blank">CodeChef</a>
+    </div>
+  </div>
+</section>
+
+
+    </main>
+
+    <footer class="center tiny muted" style="margin-top:28px">All © <span id="year"></span> Narasimha — Built with ❤</footer>
+  </div>
+
+  <!-- modal -->
+  <div id="modal" class="modal" role="dialog" aria-hidden="true">
+    <div class="modal-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px">
+        <div style="font-weight:700" id="modal-title">Project Case Study</div>
+        <button class="close" onclick="closeModal()">Close</button>
+      </div>
+      <div id="modal-body" class="muted tiny">Project details will show here.</div>
+    </div>
+  </div>
+
+  <script>
+    // small interactive scripts
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function handleContact(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const subject = encodeURIComponent(document.getElementById('subject').value || 'Portfolio%20Contact');
+      const message = encodeURIComponent(document.getElementById('message').value);
+      const body = encodeURIComponent(`Hi, I'm ${name} (%20${email}%29.%0A%0A${decodeURIComponent(message)}`);
+      window.location.href = `mailto:your.email@example.com?subject=${subject}&body=${body}`;
+    }
+
+    function openModal(id){
+      const modal = document.getElementById('modal');
+      const title = document.getElementById('modal-title');
+      const body = document.getElementById('modal-body');
+      if(id==='proj1'){
+        title.textContent = 'Student Library Management System';
+        body.innerHTML = '<p class="muted tiny">Built a full-stack library system with Python and SQL. Implemented features to add/remove books, issue/return books and manage user accounts. Faced and solved SQL connection issues and wrote migration scripts.</p>';
+      } else if(id==='proj2'){
+        title.textContent = 'College Portal Redesign';
+        body.innerHTML = '<p class="muted tiny">Completed a Figma-led redesign focusing on accessibility: improved navigation, created responsive components and exported static HTML prototypes.</p>';
+      } else if(id==='proj3'){
+        title.textContent = 'Java Dynamic Web Pages';
+        body.innerHTML = '<p class="muted tiny">Developed dynamic JSP pages with backend Java servlets and SQL. Handled sessions and implemented CRUD operations for student data.</p>';
+      } else if(id==='proj4'){
+        title.textContent = 'Test Automation Scripts';
+        body.innerHTML = '<p class="muted tiny">Wrote Selenium scripts and TestNG suites for regression testing, added basic reporting and CI hooks for nightly runs.</p>';
+      }
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden','false');
+    }
+    function closeModal(){
+      const modal = document.getElementById('modal');
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden','true');
+    }
+
+    // close modal on escape
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); });
+  </script>
+</body>
+</html>
