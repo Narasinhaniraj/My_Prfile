@@ -24,10 +24,10 @@
     .container{max-width:var(--maxw);margin:28px auto;padding:24px}
 
     /* header */
-    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
     .brand{display:flex;gap:12px;align-items:center}
     .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#60a5fa);display:flex;align-items:center;justify-content:center;font-weight:700;color:#06202a}
-    nav{display:flex;gap:12px;align-items:center}
+    nav{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
     nav a{padding:8px 12px;border-radius:8px;font-size:14px;color:var(--muted)}
     nav a.primary{background:var(--glass);color:var(--accent)}
 
@@ -35,8 +35,8 @@
     .hero{display:grid;grid-template-columns:1fr 360px;gap:28px;margin:32px 0;align-items:center}
     .intro h1{font-size:34px;margin:0 0 12px}
     .intro p.lead{color:var(--muted);margin:0 0 16px;line-height:1.5}
-    .ctas{display:flex;gap:12px}
-    .btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;cursor:pointer}
+    .ctas{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;cursor:pointer;font-size:14px;white-space:nowrap}
     .btn.primary{background:linear-gradient(90deg,var(--accent),#60a5fa);color:#042926;border:none}
 
     .profile-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:14px;backdrop-filter:blur(6px)}
@@ -55,19 +55,102 @@
     .projects{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
     .proj{display:flex;flex-direction:column;gap:10px}
     .proj .thumb{height:140px;border-radius:10px;background:linear-gradient(135deg,#063447, #0b1220);display:flex;align-items:center;justify-content:center;color:var(--muted)}
-    .proj .meta{display:flex;justify-content:space-between;align-items:center}
+    .proj .meta{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 
     /* footer/contact */
     .contact-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     input,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
     textarea{min-height:120px;resize:vertical}
 
+    /* Mobile menu */
+    .mobile-menu-btn{display:none;background:transparent;border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:8px;color:var(--muted);cursor:pointer}
+    .mobile-menu-btn svg{width:20px;height:20px}
+
     /* responsive */
-    @media (max-width:900px){
-      .hero{grid-template-columns:1fr;}
+    @media (max-width: 1024px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .profile-card {
+        order: -1;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 900px){
       .projects{grid-template-columns:1fr}
       .grid-3{grid-template-columns:1fr}
       .contact-form{grid-template-columns:1fr}
+      
+      .container {
+        padding: 16px;
+      }
+      
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      
+      nav {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .intro h1 {
+        font-size: 28px;
+      }
+      
+      .ctas {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .btn {
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .intro h1 {
+        font-size: 24px;
+      }
+      
+      .brand {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+        position: absolute;
+        top: 20px;
+        right: 16px;
+      }
+      
+      nav {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        margin-top: 16px;
+      }
+      
+      nav.show {
+        display: flex;
+      }
+      
+      .proj .meta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .profile-card .meta {
+        flex-direction: column;
+        gap: 12px;
+      }
     }
 
     /* small polish */
@@ -76,9 +159,9 @@
     .center{display:flex;align-items:center;justify-content:center}
 
     /* project modal */
-    .modal{position:fixed;inset:0;background:rgba(2,6,23,0.7);display:none;align-items:center;justify-content:center}
+    .modal{position:fixed;inset:0;background:rgba(2,6,23,0.7);display:none;align-items:center;justify-content:center;z-index:1000;padding:16px}
     .modal.show{display:flex}
-    .modal-card{background:#071625;padding:20px;border-radius:12px;max-width:900px;width:92%}
+    .modal-card{background:#071625;padding:20px;border-radius:12px;max-width:900px;width:92%;max-height:80vh;overflow-y:auto}
     .close{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:6px 8px;border-radius:8px;cursor:pointer}
 
   </style>
@@ -86,6 +169,12 @@
 <body>
   <div class="container">
     <header>
+      <button class="mobile-menu-btn" aria-label="Toggle menu">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+      </button>
+      
       <div class="brand">
         <div class="logo">NR</div>
         <div>
@@ -94,7 +183,7 @@
         </div>
       </div>
 
-      <nav>
+      <nav id="main-nav">
         <a href="#about" class="primary">About</a>
         <a href="#projects" class="primary">Projects</a>
         <a href="#contact" class="primary">Contact</a>
@@ -109,8 +198,8 @@
 
           <div class="ctas">
             <a class="btn primary" href="#projects">View Projects</a>
-            <a class="btn primary" href="mailto:your.email@example.com?subject=Contact%20from%20Portfolio">pinnintinarasimha73@gmail.com</a>
-            <a class="btn primary" href="file:///C:/Users/hp/Desktop/Company_resumes/pinninti_narasimha_rao.pdf" download>Download Resume</a>
+            <a class="btn primary" href="mailto:pinnintinarasimha73@gmail.com?subject=Contact%20from%20Portfolio">Email Me</a>
+            <a class="btn primary" href="./assets/modify.pdf" download>Download Resume</a>
           </div>
 
           <div style="margin-top:18px" class="tiny muted">Language: <span class="chip">Python</span> <span class="chip">Java</span>  <span class="chip">HTML/CSS/JS</span></div>
@@ -122,7 +211,9 @@
         </div>
 
         <aside class="profile-card">
-          <div class="Narasimha Profile Photo"><img src="./assets/picoo/P1045057.JPG" alt="Narasimha Profile Photo" class="profile-photo" /></div>
+          <div class="profile-photo">
+            <img src="./assets/P1045058.JPG" alt="Narasimha Profile Photo" onerror="this.style.display='none'; this.parentElement.innerHTML='Narasimha Photo'" style="width:100%;height:100%;object-fit:cover" />
+          </div>
           <div class="meta">
             <div>
               <div style="font-weight:700">Vijayawada, India</div>
@@ -222,7 +313,7 @@
             <div class="meta">
               <div class="tiny muted">AI Agent using n8n Workflow – Built an interactive AI Agent capable of real-time conversations with memory retention using n8n and OpenAI API. Automated responses in a no-code workflow, marking my first milestone in AI and automation.</div>
               <div>
-                <button class="btn" onclick="openModal('proj2')">Case Study</button>
+                <button class="btn" onclick="openModal('proj4')">Case Study</button>
                 <a class="btn" href="#" onclick="window.open('https://github.com/Narasinhaniraj/My_First_AI_Agent/tree/main')">Prototype</a>
               </div>
             </div>
@@ -237,7 +328,7 @@
             <div class="meta">
               <div class="tiny muted">My project is an AI-powered healthcare chatbot that uses NLP and deep learning to predict diseases from symptoms. It not only gives accurate diagnosis (94.2% accuracy) but also suggests medications, natural remedies, and sends health reports via email. I mainly worked on NLP-based prediction, SQL database, and Flask backend integration.</div>
               <div>
-                <button class="btn" onclick="openModal('proj4')">Case Study</button>
+                <button class="btn" onclick="openModal('proj5')">Case Study</button>
                 <a class="btn" href="#" onclick="window.open('https://github.com/Narasinhaniraj/Harnessing-Deep-Learning-for-Early-Disease-Diagnosis','_blank')">GitHub</a>
               </div>
             </div>
@@ -278,13 +369,28 @@
         <div style="font-weight:700" id="modal-title">Project Case Study</div>
         <button class="close" onclick="closeModal()">Close</button>
       </div>
-      <div id="modal-body" class="muted tiny">Project details will show here.</div>
+      <div id="modal-body" class="muted">Project details will show here.</div>
     </div>
   </div>
 
   <script>
     // small interactive scripts
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile menu toggle
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    const mainNav = document.getElementById('main-nav');
+    
+    menuBtn.addEventListener('click', () => {
+      mainNav.classList.toggle('show');
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!mainNav.contains(e.target) && !menuBtn.contains(e.target)) {
+        mainNav.classList.remove('show');
+      }
+    });
 
     function handleContact(e){
       e.preventDefault();
@@ -300,30 +406,45 @@
       const modal = document.getElementById('modal');
       const title = document.getElementById('modal-title');
       const body = document.getElementById('modal-body');
+      
       if(id==='proj1'){
         title.textContent = 'Student Library Management System';
-        body.innerHTML = '<p class="muted tiny">Built a full-stack library system with Python and SQL. Implemented features to add/remove books, issue/return books and manage user accounts. Faced and solved SQL connection issues and wrote migration scripts.</p>';
+        body.innerHTML = '<p class="muted">Built a full-stack library system with Python and SQL. Implemented features to add/remove books, issue/return books and manage user accounts. Faced and solved SQL connection issues and wrote migration scripts.</p>';
       } else if(id==='proj2'){
-        title.textContent = 'College Portal Redesign';
-        body.innerHTML = '<p class="muted tiny">Completed a Figma-led redesign focusing on accessibility: improved navigation, created responsive components and exported static HTML prototypes.</p>';
+        title.textContent = 'UI/UX Restaurant Menu';
+        body.innerHTML = '<p class="muted">Completed a Figma-led redesign focusing on accessibility: improved navigation, created responsive components and exported static HTML prototypes.</p>';
       } else if(id==='proj3'){
         title.textContent = 'Java Dynamic Web Pages';
-        body.innerHTML = '<p class="muted tiny">Developed dynamic JSP pages with backend Java servlets and SQL. Handled sessions and implemented CRUD operations for student data.</p>';
+        body.innerHTML = '<p class="muted">Developed dynamic JSP pages with backend Java servlets and SQL. Handled sessions and implemented CRUD operations for student data.</p>';
       } else if(id==='proj4'){
-        title.textContent = 'Test Automation Scripts';
-        body.innerHTML = '<p class="muted tiny">Wrote Selenium scripts and TestNG suites for regression testing, added basic reporting and CI hooks for nightly runs.</p>';
+        title.textContent = 'AI Agent using n8n Workflow';
+        body.innerHTML = '<p class="muted">Built an interactive AI Agent capable of real-time conversations with memory retention using n8n and OpenAI API. Automated responses in a no-code workflow.</p>';
+      } else if(id==='proj5'){
+        title.textContent = 'Harnessing Deep Learning for Early Disease Diagnosis';
+        body.innerHTML = '<p class="muted">My project is an AI-powered healthcare chatbot that uses NLP and deep learning to predict diseases from symptoms. It not only gives accurate diagnosis (94.2% accuracy) but also suggests medications, natural remedies, and sends health reports via email.</p>';
       }
+      
       modal.classList.add('show');
       modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden'; // Prevent background scrolling
     }
+    
     function closeModal(){
       const modal = document.getElementById('modal');
       modal.classList.remove('show');
       modal.setAttribute('aria-hidden','true');
+      document.body.style.overflow = ''; // Re-enable scrolling
     }
 
     // close modal on escape
-    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); });
+    window.addEventListener('keydown', (e)=>{ 
+      if(e.key==='Escape') closeModal(); 
+    });
+    
+    // Close modal when clicking outside
+    document.getElementById('modal').addEventListener('click', (e) => {
+      if (e.target.id === 'modal') closeModal();
+    });
   </script>
 </body>
 </html>
